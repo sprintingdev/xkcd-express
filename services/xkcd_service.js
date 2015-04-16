@@ -34,7 +34,14 @@ var fetch = function(number, callback) {
 		if(err) {
 			callback(err);
 		} else {
-			fetchByNumber(number, collection, callback); 
+			if(!number) {
+				collection.count(function(error, count) {
+					fetchByNumber(count, collection, callback);
+				});
+			} else {
+				fetchByNumber(number, collection, callback); 	
+			}
+			
 		}
 	});
 }

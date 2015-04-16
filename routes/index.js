@@ -10,7 +10,7 @@ var callbackForFetch = function(error, req, res, next, body) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index', { title: 'XKCD Express' });
 });
 
 /* GET Latest */

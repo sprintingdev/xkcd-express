@@ -1,14 +1,40 @@
 doctype html
-html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
-    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-  body
-    block content
-    script(type='text/javascript', src='/javascripts/jquery-1.11.2.min.js')
-    script(type='text/javascript', src='/javascripts/bootstrap.min.js')
-    script(type='text/javascript', src='/javascripts/angular.min.js')
-    script(type='text/javascript', src='/javascripts/angular-animate.min.js')
-    script(type='text/javascript', src='/javascripts/angular-route.min.js')
-    script(type='text/javascript', src='/javascripts/angular-resource.min.js')
+html(ng-app="xkcdApp")
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+        link(rel='stylesheet', href='/stylesheets/style.css')
+
+    body
+        nav(class="navbar navbar-inverse navbar-fixed-top")
+            .container-fluid
+                .navbar-header
+                    button(type="button", class="navbar-toggle collapsed", data-toggle="collapse", data-target="#bs-example-navbar-collapse-1")
+                        span(class="sr-only")
+                            |Toggle navigation
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+                        span(class="icon-bar")
+        
+      
+                    a(class="navbar-brand" href="#/")
+                        |XKCD Express
+                 div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+                    ul(class="nav navbar-nav")
+                        li(class="{{active ? 'active' : ''}}")
+                            a(href="#/latest") 
+                                |Latest 
+                        li(class="{{active ? 'active' : ''}}")
+                            a(href="#/archives")
+                                |Archives
+        div(ng-view)                        
+        block content
+        script(type='text/javascript', src='/javascripts/jquery-1.11.2.min.js')
+        script(type='text/javascript', src='/javascripts/bootstrap.min.js')
+        script(type='text/javascript', src='/javascripts/angular.min.js')
+        script(type='text/javascript', src='/javascripts/angular-animate.min.js')
+        script(type='text/javascript', src='/javascripts/angular-route.min.js')
+        script(type='text/javascript', src='/javascripts/angular-resource.min.js')
+        script(type='text/javascript', src='/javascripts/xkcdApp.js')
+

@@ -27,4 +27,14 @@ router.get('/get/:number', function(req, res, next){
 	});
 }); 
 
+router.get('/count', function(req, res, next){
+	xkcdService.count(function(error, count){
+		if(error) {
+			res.json({status: false});
+		} else {
+			res.json({count: count})
+		}
+	});
+});
+
 module.exports = router;

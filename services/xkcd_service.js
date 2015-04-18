@@ -54,4 +54,16 @@ XkcdService.prototype.fetchByNumber = function(number, callback) {
 	fetch(number, callback);
 }
 
+XkcdService.prototype.count = function(callback) {
+	db.collection('comics', function(err, collection){
+		if(err) {
+			callback(err);
+		} else {
+			collection.count(function(error, count) {
+				callback(null, count);
+			});
+		}
+	});
+}
+
 module.exports = new XkcdService();

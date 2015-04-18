@@ -24,18 +24,31 @@ xkcdApp.controller("ArchivesController", ['$scope', '$http', '$q', function($sco
     $http.get('/count').success(function(data) {
         console.log(data.count);
         $scope.count = data.count;
-        $scope.comics = [];
+        $scope.comics = [];        
+        $scope.lastIndexFetched = 0;        
+        $scope.fetch();
+        
+    });
+
+    $scope.fetch = function() {
         var comicFetches = []
         for(var i = 0; i < 18; i++) {
             var index = i;
             comicFetches[index] = $http.get("/get/" + ($scope.count - i));
         }
         console.log("Total number of calls " + comicFetches.length);
+
         $q.all(comicFetches).then(function(fetchComicsResults){
             for(var index in fetchComicsResults) {
                 $scope.comics.push(fetchComicsResults[index].data);
             }           
         });
-        $scope.lastIndexFetched = --i;
-    });
+
+        $scope.lastIndexFetched = i;
+    }
+
+    $scope.openComic = function(comic) {
+        $scope.comic = comic;
+        $("#comicModal").modal('show');
+    }
 }]);

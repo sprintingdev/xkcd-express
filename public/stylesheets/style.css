@@ -1,1 +1,11 @@
 body { padding-top: 70px; }
+.comicDiv  { cursor: pointer; cursor: hand; }
+.modal-dialog {
+      width: 100%;
+      padding: 0;
+      margin:0;
+}
+.modal-content {    
+      border-radius: 0;
+      overflow:auto;
+}

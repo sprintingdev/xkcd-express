@@ -1,4 +1,4 @@
-var xkcdApp = angular.module('xkcdApp', ['ngRoute']);
+var xkcdApp = angular.module('xkcdApp', ['ngRoute', 'infinite-scroll']);
 xkcdApp.config(['$routeProvider',function($routeProvider) {
     $routeProvider.
         when('/latest', {
@@ -21,34 +21,43 @@ xkcdApp.controller("LatestController", ['$scope', '$http', function($scope, $htt
 }]);
 
 xkcdApp.controller("ArchivesController", ['$scope', '$http', '$q', function($scope, $http, $q) {
+
     $http.get('/count').success(function(data) {
+
+        $scope.fetch = function() {
+            var comicFetches = [];
+            console.log($scope.count);
+            console.log($scope.lastIndexFetched);
+            for(var i = 0; i < 18; i++) {
+                comicFetches[i] = $http.get("/get/" + ($scope.count - i - $scope.lastIndexFetched));
+            }
+
+            $q.all(comicFetches).then(function(fetchComicsResults){
+                for(var index in fetchComicsResults) {
+                    $scope.comics.push(fetchComicsResults[index].data);
+                }           
+            });
+
+            $scope.lastIndexFetched += i;
+        }
+
+        $scope.openComic = function(comic) {
+            $scope.comic = comic;
+            $('#comicModal').on('hidden.bs.modal', function () {
+                $(this).find('.modal-body').css({width:'auto',
+                                   height:'auto', 
+                                  'max-height':'100%'});
+            });
+
+            $("#comicModal").modal('show');
+
+        }
         console.log(data.count);
         $scope.count = data.count;
         $scope.comics = [];        
         $scope.lastIndexFetched = 0;        
         $scope.fetch();
-        
     });
 
-    $scope.fetch = function() {
-        var comicFetches = []
-        for(var i = 0; i < 18; i++) {
-            var index = i;
-            comicFetches[index] = $http.get("/get/" + ($scope.count - i));
-        }
-        console.log("Total number of calls " + comicFetches.length);
-
-        $q.all(comicFetches).then(function(fetchComicsResults){
-            for(var index in fetchComicsResults) {
-                $scope.comics.push(fetchComicsResults[index].data);
-            }           
-        });
-
-        $scope.lastIndexFetched = i;
-    }
-
-    $scope.openComic = function(comic) {
-        $scope.comic = comic;
-        $("#comicModal").modal('show');
-    }
+    
 }]);

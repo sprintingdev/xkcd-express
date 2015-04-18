@@ -26,8 +26,6 @@ xkcdApp.controller("ArchivesController", ['$scope', '$http', '$q', function($sco
 
         $scope.fetch = function() {
             var comicFetches = [];
-            console.log($scope.count);
-            console.log($scope.lastIndexFetched);
             for(var i = 0; i < 18; i++) {
                 comicFetches[i] = $http.get("/get/" + ($scope.count - i - $scope.lastIndexFetched));
             }
@@ -52,7 +50,6 @@ xkcdApp.controller("ArchivesController", ['$scope', '$http', '$q', function($sco
             $("#comicModal").modal('show');
 
         }
-        console.log(data.count);
         $scope.count = data.count;
         $scope.comics = [];        
         $scope.lastIndexFetched = 0;        

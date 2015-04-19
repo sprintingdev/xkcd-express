@@ -9,10 +9,18 @@ xkcdApp.config(['$routeProvider',function($routeProvider) {
             templateUrl: '/templates/archives.html',
             controller: 'ArchivesController'
         }).
+        when('/about', {
+            templateUrl: '/templates/about.html',
+            controller: 'AboutController'
+        }).
         otherwise({
             redirectTo: '/latest'
         });
 }]);
+
+xkcdApp.controller("AboutController", function($scope){
+
+});
 
 xkcdApp.controller("LatestController", ['$scope', '$http', function($scope, $http) {
     $http.get('/latest').success(function(data){
